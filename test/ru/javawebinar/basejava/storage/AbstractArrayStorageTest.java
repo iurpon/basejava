@@ -13,9 +13,18 @@ import static org.junit.Assert.*;
 public abstract class AbstractArrayStorageTest {
 
     private Storage storage;
+
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
+
+//    AbstractArrayStorageTest(Storage storage) {
+//        this.storage = storage;
+//    }
+
+    public AbstractArrayStorageTest(Storage storage) {
+        this.storage = storage;
+    }
 
     @Before
     public void setUp() throws Exception {
