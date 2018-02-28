@@ -1,12 +1,8 @@
 package ru.javawebinar.basejava.storage;
 
-import static org.junit.Assert.*;
-
 public class SortedArrayStorageTest extends AbstractArrayStorageTest {
 
-    SortedArrayStorageTest() {
+    public SortedArrayStorageTest() {
         super(new SortedArrayStorage());
     }
-
-
 }

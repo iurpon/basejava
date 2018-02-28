@@ -6,7 +6,7 @@ public interface Storage {
 
     void clear();
 
-    void update(Resume r, Resume rUpdate);
+    void update(Resume r);
 
     void save(Resume r);
 
