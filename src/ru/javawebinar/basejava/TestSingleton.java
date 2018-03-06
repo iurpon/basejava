@@ -15,5 +15,12 @@ public class TestSingleton {
 
     public static void main(String[] args) {
         getInstance().toString();
+        Singleton instance = Singleton.valueOf("INSTANCE");
+        System.out.println(instance.name());
+        System.out.println(instance.ordinal());
+    }
+
+    public enum Singleton {
+        INSTANCE
     }
 }
