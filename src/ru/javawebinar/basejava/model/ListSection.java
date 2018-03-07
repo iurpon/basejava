@@ -1,6 +1,7 @@
 package ru.javawebinar.basejava.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ListSection extends Section {
 
@@ -8,6 +9,7 @@ public class ListSection extends Section {
 
 
     public ListSection(List<String> items) {
+        Objects.requireNonNull(items, "items must not be null");
         this.items = items;
     }
 
@@ -23,15 +25,15 @@ public class ListSection extends Section {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if ( o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         ListSection that = (ListSection) o;
 
-        return items != null ? items.equals(that.items) : that.items == null;
+        return items.equals(that.items);
     }
 
     @Override
     public int hashCode() {
-        return items != null ? items.hashCode() : 0;
+        return items.hashCode();
     }
 }
