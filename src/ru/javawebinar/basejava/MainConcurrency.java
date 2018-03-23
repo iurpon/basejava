@@ -2,6 +2,10 @@ package ru.javawebinar.basejava;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class MainConcurrency {
 
@@ -26,53 +30,64 @@ public class MainConcurrency {
         System.out.println(thread0.getState());
 
         final MainConcurrency mainConcurrency = new MainConcurrency();
+        CountDownLatch latch = new CountDownLatch(THREADS_NUMBER);
 
-        List<Thread> threads = new ArrayList<>(THREADS_NUMBER);
+        ExecutorService executorService = Executors.newCachedThreadPool();
+
+//        List<Thread> threads = new ArrayList<>(THREADS_NUMBER);
 
         for (int i = 0; i < THREADS_NUMBER; i++) {
-            Thread thread = new Thread(() -> {
+            executorService.submit(() ->
+//            Thread thread = new Thread(() ->
+
+            {
                 for (int j = 0; j < 100; j++) {
                     mainConcurrency.inc();
                 }
+                latch.countDown();
             });
-            thread.start();
-            threads.add(thread);
+//            thread.start();
+//            threads.add(thread);
         }
 
-        threads.forEach(t -> {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        System.out.println(counter);
+//        threads.forEach(t -> {
+//            try {
+//                t.join();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        });
 
-        final String lock1 = "lock1";
-        final String lock2 = "lock2";
-        deadLock(lock1, lock2);
-        deadLock(lock2, lock1);
+        latch.await(20, TimeUnit.SECONDS);
+        executorService.shutdown();
+        System.out.println(mainConcurrency.counter);
+
+
+//        final String lock1 = "lock1";
+//        final String lock2 = "lock2";
+//        deadLock(lock1, lock2);
+//        deadLock(lock2, lock1);
 
 
     }
 
-    private static void deadLock(Object lock1, Object lock2) {
-        new Thread(()-> {
-            System.out.println("Waiting" + lock1);
-            synchronized (lock1) {
-                System.out.println("Holding" + lock1);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("Waiting" + lock2);
-                synchronized (lock2) {
-                    System.out.println("Holding" + lock2);
-                }
-            }
-        }).start();
-    }
+//    private static void deadLock(Object lock1, Object lock2) {
+//        new Thread(()-> {
+//            System.out.println("Waiting" + lock1);
+//            synchronized (lock1) {
+//                System.out.println("Holding" + lock1);
+//                try {
+//                    Thread.sleep(500);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                System.out.println("Waiting" + lock2);
+//                synchronized (lock2) {
+//                    System.out.println("Holding" + lock2);
+//                }
+//            }
+//        }).start();
+//    }
 
     private void inc() {
             counter++;
