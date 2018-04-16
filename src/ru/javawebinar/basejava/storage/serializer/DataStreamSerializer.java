@@ -71,7 +71,7 @@ public class DataStreamSerializer implements StreamSerializer {
             readItems(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
             readItems(dis, () -> {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
-                resume.setSection(sectionType, readSection(dis, sectionType));
+                resume.addSection(sectionType, readSection(dis, sectionType));
             });
             return resume;
         }
